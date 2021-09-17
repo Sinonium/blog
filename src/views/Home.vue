@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <PostsList v-if="posts.length" :posts="posts"/>
+    <Spinner v-else/>
+    <div v-if="error">{{error}}</div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import PostsList from '@/components/PostsList.vue'
+import getPosts from '@/composables/getPosts'
+import Spinner from '@/components/Spinner'
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  components:{PostsList, Spinner},
+  setup() {
+    const {posts, error, fetchPosts} = getPosts()
+    fetchPosts()
+    return {posts, error}
   }
 }
 </script>
+
+<style>
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+</style>
