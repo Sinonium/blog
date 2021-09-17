@@ -1,14 +1,15 @@
 import {ref} from 'vue'
+import { firestore } from '@/firebase/config'
 const getPosts = () => {
     const posts = ref([])
     const error = ref('')
     const fetchPosts = async () => {
         try{
-          const response = await fetch('http://localhost:3000/posts')
+          const response = await firestore.collection('posts').get()
     
-          const json = await response.json()
-    
-          posts.value = json
+          posts.value = response.docs.map((doc) => {
+            return {...doc.data(), id: doc.id}
+          })
         }
         catch(err){
           error.value = err.message

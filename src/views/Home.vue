@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    <PostsList v-if="posts.length" :posts="posts"/>
+    <div v-if="posts.length" class="grid ">
+      <div>
+        <PostsList :posts="posts"/>
+      </div>
+      <TagsCloud />
+    </div>
     <Spinner v-else/>
     <div v-if="error">{{error}}</div>
   </div>
@@ -10,8 +15,9 @@
 import PostsList from '@/components/PostsList.vue'
 import getPosts from '@/composables/getPosts'
 import Spinner from '@/components/Spinner'
+import TagsCloud from '@/components/TagsCloud'
 export default {
-  components:{PostsList, Spinner},
+  components:{PostsList, Spinner, TagsCloud},
   setup() {
     const {posts, error, fetchPosts} = getPosts()
     fetchPosts()
@@ -25,5 +31,10 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   padding: 10px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
 }
 </style>

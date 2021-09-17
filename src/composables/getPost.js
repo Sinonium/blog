@@ -1,4 +1,6 @@
 import {ref} from 'vue'
+import firestore from '../firebase/config';
+
 
 const getPost = (id) => {
     const post = ref(null)
@@ -6,13 +8,13 @@ const getPost = (id) => {
 
     const fetchPost = async () => {
         try {
-            const response = await fetch('http://localhost:3000/posts/' + id)
+            const response = await firestore.collection('posts').doc(id).get()
 
-            if(!response.ok) {
+            if(!response.exists) {
                 throw Error('Нет данных в базе')
             }
 
-            post.value = await response.json()
+            post.value = {...response.data(), id}
             
         }
         catch(err) {
