@@ -1,7 +1,5 @@
 import {ref} from 'vue'
-import firestore from '../firebase/config';
-
-
+import {firestore} from '../firebase/config';
 const getPost = (id) => {
     const post = ref(null)
     const error = ref(null)
@@ -15,13 +13,11 @@ const getPost = (id) => {
             }
 
             post.value = {...response.data(), id}
-            
         }
         catch(err) {
             error.value = err.message
         }
     }
-
     return {post, error, fetchPost}
 }
 

@@ -15,7 +15,9 @@ import { computed } from '@vue/reactivity'
 export default {
     props: ['post'],
     setup(props) {
+       console.log(post);
         const body = computed(() => {
+         
             return props.post.body.substring(0,100) + '...'
         })
         return {body}
