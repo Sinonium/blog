@@ -1,5 +1,5 @@
 <template>
-  <div class="post">
+  <div v-if="post" class="post">
       <router-link :to="{name: 'Details', params: {id: post.id}}">
           <h3>{{post.title}}</h3>
       </router-link>
@@ -15,7 +15,6 @@ import { computed } from '@vue/reactivity'
 export default {
     props: ['post'],
     setup(props) {
-       console.log(post);
         const body = computed(() => {
          
             return props.post.body.substring(0,100) + '...'
@@ -28,7 +27,7 @@ export default {
 
 <style>
 .post {
-  margin: 0 40px 30px;
+  margin: 0 0 30px;
   padding-bottom: 30px;
   border-bottom: 1px dashed #e7e7e7;
 }

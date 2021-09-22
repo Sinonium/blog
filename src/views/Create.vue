@@ -14,12 +14,14 @@
           <button @click.prevent="handleAddTag">Добавить тэг</button>
           <button class="createBtn" @click.prevent="handleSubmit">Создать</button>
       </form>
+      
   </div>
 </template>
 
 <script>
 import { ref } from '@vue/reactivity'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
+import { firestore, timestamp } from '@/firebase/config'
 export default {
     setup() {
         const router = useRouter()
@@ -42,15 +44,17 @@ export default {
                 const newPost = {
                     title: title.value,
                     body: body.value,
-                    tags: tags.value
+                    tags: tags.value,
+                    createdAt: timestamp()
                 }
-                await fetch ('http://localhost:3000/posts', {
-                 method: "POST",
-                 headers:{ "Content-Type": "application/json"},
-                 body: JSON.stringify(newPost)
-                 });
+                await firestore.collection('posts').add(newPost)
+                // await fetch ('http://localhost:3000/posts', {
+                //  method: "POST",
+                //  headers:{ "Content-Type": "application/json"},
+                //  body: JSON.stringify(newPost)
+                //  });
 
-                 await router.push('/')
+                await router.push('/')
             }
             catch (err) {
                 console.log(err);

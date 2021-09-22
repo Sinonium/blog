@@ -5,7 +5,7 @@ const getPosts = () => {
     const error = ref('')
     const fetchPosts = async () => {
         try{
-          const response = await firestore.collection('posts').get()
+          const response = await firestore.collection('posts').orderBy('createdAt', 'desc').get()
     
           posts.value = response.docs.map((doc) => {
             return {...doc.data(), id: doc.id}

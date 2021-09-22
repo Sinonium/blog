@@ -1,10 +1,10 @@
 <template>
-  <div class="home">
+  <div>
     <div v-if="posts.length" class="grid ">
       <div>
         <PostsList :posts="posts"/>
       </div>
-      <TagsCloud />
+      <TagsCloud :posts="posts"/>
     </div>
     <Spinner v-else/>
     <div v-if="error">{{error}}</div>
