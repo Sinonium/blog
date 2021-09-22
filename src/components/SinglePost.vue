@@ -17,7 +17,7 @@ export default {
     setup(props) {
         const body = computed(() => {
          
-            return props.post.body.substring(0,100) + '...'
+            return props.post.body.substring(0,50) + '...'
         })
         return {body}
     }
@@ -50,5 +50,17 @@ export default {
   padding-right: 40px;
   left: -30px;
   transform: rotateZ(-1deg);
+}
+
+@media screen and (max-width: 425px) {
+  .post h3{
+    font-size: 28px;
+  }
+  .post p{
+    margin: 10px 0;
+    font-size: 20px;
+    max-width: 220px;
+    overflow: hidden;
+  }
 }
 </style>
