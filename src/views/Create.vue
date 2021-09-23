@@ -32,8 +32,7 @@ export default {
         const tags = ref([])
 
         const handleAddTag = () => {
-            if(!tag.value.includes(' ') && !tags.value.includes(tag.value.toLowerCase()) 
-            && tags.value.length != 0){
+            if(!tag.value.includes(' ') && tag.value.length != 0 && !tags.value.includes(tag.value.toLowerCase())){
                 tags.value = [...tags.value, tag.value.toLowerCase()]
             }
 
