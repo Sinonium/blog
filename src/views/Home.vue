@@ -16,9 +16,20 @@ import PostsList from '@/components/PostsList.vue'
 import getPosts from '@/composables/getPosts'
 import Spinner from '@/components/Spinner'
 import TagsCloud from '@/components/TagsCloud'
+import getUser from "@/composables/getUser";
+import { useRouter } from "vue-router";
+import { watch } from '@vue/runtime-core'
 export default {
   components:{PostsList, Spinner, TagsCloud},
   setup() {
+    const { user } = getUser()
+    const router = useRouter()
+    watch(user, ()=> {
+      if (!user.value) {
+        router.push("/Welcome");
+      }
+    })
+
     const {posts, error, fetchPosts} = getPosts()
     fetchPosts()
     return {posts, error}

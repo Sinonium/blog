@@ -1,17 +1,34 @@
 <template>
-  <header>
-      <h1>Блог</h1>
+  <header v-if="user">
+      <h1>Блог {{ user.displayName }}</h1>
       <nav>
           <router-link :to="{name: 'Home'}">Главная</router-link>
           <router-link :to="{name: 'Create'}">Создать Пост</router-link>
+          <button @click="handleClick">Выйти</button>
       </nav>
   </header>
 </template>
 
 <script>
+import useLogout from "@/composables/useLogout";
+import getUser from "@/composables/getUser";
+  import { useRouter } from "vue-router";
 export default {
+  components: {},
+  setup() {
+    const { error, logout } = useLogout();
+    const { user } = getUser();
+    const router = useRouter();
 
-}
+    const handleClick = async () => {
+      await logout();
+      if (!error.value) {
+        router.push({ name: "Welcome" });
+      }
+    };
+    return { error, handleClick, user };
+  },
+};
 </script>
 
 <style>
@@ -35,5 +52,12 @@ header a {
 header a.router-link-active {
   color: #444;
   font-weight: bold;
+}
+header nav{
+  display: flex;
+  align-items: center;
+}
+header nav button {
+  margin: 0 0 0 20px;
 }
 </style>

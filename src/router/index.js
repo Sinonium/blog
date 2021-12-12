@@ -4,35 +4,57 @@ import Details from '../views/Details.vue'
 import Create from '../views/Create.vue'
 import Tags from '../views/Tags.vue'
 import Welcome from '../views/Welcome.vue'
+import { auth } from '@/firebase/config'
+
+const requireAuth = (to, from, next) => {
+  let user = auth.currentUser
+  if (!user) {
+    return next({ name: 'Welcome' })
+  }
+  return next()
+}
+
+const requireNoAuth = (to, from, next) => {
+  let user = auth.currentUser
+  if (user) {
+    return next({ name: '/' })
+  }
+  return next()
+}
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter: requireAuth
   },
   {
     path: '/posts/:id',
     name: 'Details',
     component: Details,
-    props: true
+    props: true,
+    beforeEnter: requireAuth
   },
   {
     path: '/Create',
     name: 'Create',
     component: Create,
+    beforeEnter: requireAuth
   },
   {
     path: '/tags/:id',
     name: 'Tags',
     component: Tags,
-    props: true
+    props: true,
+    beforeEnter: requireAuth
   },
   {
     path: '/Welcome',
     name: 'Welcome',
     component: Welcome,
-    props: true
+    props: true,
+    beforeEnter: requireNoAuth,
   }
 
 ]
