@@ -17,7 +17,7 @@ const requireAuth = (to, from, next) => {
 const requireNoAuth = (to, from, next) => {
   let user = auth.currentUser
   if (user) {
-    return next({ name: '/' })
+    return next({ name: 'Home' })
   }
   return next()
 }
